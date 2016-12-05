@@ -5,6 +5,7 @@ sequel auditable
 ## Installation
 
 ```ruby
+gem 'sequel_polymorphic'
 gem 'sequel-auditable', github: 'Prepsmith/sequel-auditable'
 ```
 
@@ -16,7 +17,26 @@ And then execute:
 
 Copy `models/audit.rb` to your project.
 
-Copy `migrations/create_audits` to your project.
+Copy `migrations/create_audits` to your project and run migration.
+
+Require sequel auditable and add `pg_json` extension.
+
+```
+require 'sequel/auditable'
+
+DB.extension(:pg_json)
+```
+
+Enable instance_hooks plugin and auditable plugin.
+
+```
+plugin :instance_hooks
+plugin :auditable
+
+# plugin :auditable additional_fields: %i(state owner)
+```
+
+Also make sure `Thread[:current_user]` (user in eic-auth) exists in every request.
 
 ## Development
 
