@@ -19,15 +19,13 @@ Copy `models/audit.rb` to your project.
 
 Copy `migrations/create_audits` to your project and run migration.
 
-Require sequel auditable and add `pg_json` extension.
+Add `pg_json` extension.
 
 ```
-require 'sequel/auditable'
-
 DB.extension(:pg_json)
 ```
 
-Enable instance_hooks plugin and auditable plugin.
+Enable instance_hooks plugin and auditable plugin in your models.
 
 ```
 plugin :instance_hooks
