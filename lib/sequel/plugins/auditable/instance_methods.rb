@@ -6,9 +6,13 @@ module Sequel::Plugins
         self.created_by_id = current_user_id if self.respond_to? :created_by_id=
       end
 
-      def after_save
+      def before_save
         super
         self.updated_by_id = current_user_id if self.respond_to? :updated_by_id=
+      end
+
+      def after_save
+        super
         fields = model.additional_fields.inject({}) { |hash, field| hash[field] = self.send(field); hash }
         Audit.create(user_id: current_user_id, user_name: current_user_name, resource: self, fields: Sequel.pg_json(fields))
       end
