@@ -3,18 +3,18 @@ module Sequel::Plugins
     module InstanceMethods
       def before_create
         super
-        self.created_by_id = current_user_id if self.respond_to? :created_by_id=
+        self.created_by_id = current_user_id if respond_to? :created_by_id=
       end
 
       def before_save
         super
-        self.updated_by_id = current_user_id if self.respond_to? :updated_by_id=
+        self.updated_by_id = current_user_id if respond_to? :updated_by_id=
       end
 
       def after_save
         super
         if primary_key == :id
-          fields = model.additional_fields.inject({}) { |hash, field| hash[field] = self.send(field); hash }
+          fields = model.additional_fields.inject({}) { |hash, field| hash[field] = send(field); hash }
           Audit.create(user_id: current_user_id, user_name: current_user_name, resource: self, fields: Sequel.pg_json(fields))
         end
       end
