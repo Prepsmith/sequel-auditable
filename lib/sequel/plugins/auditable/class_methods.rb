@@ -2,7 +2,6 @@ module Sequel::Plugins
   module Auditable
     module ClassMethods
       attr_reader :additional_fields
-      set_restricted_columns :created_by_id
 
       Sequel::Plugins.inherited_instance_variables(self, :@additional_fields => [])
     end
