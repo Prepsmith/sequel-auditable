@@ -13,8 +13,10 @@ module Sequel::Plugins
 
       def after_save
         super
-        fields = model.additional_fields.inject({}) { |hash, field| hash[field] = self.send(field); hash }
-        Audit.create(user_id: current_user_id, user_name: current_user_name, resource: self, fields: Sequel.pg_json(fields))
+        if primary_key == :id
+          fields = model.additional_fields.inject({}) { |hash, field| hash[field] = self.send(field); hash }
+          Audit.create(user_id: current_user_id, user_name: current_user_name, resource: self, fields: Sequel.pg_json(fields))
+        end
       end
 
       def current_user_id
