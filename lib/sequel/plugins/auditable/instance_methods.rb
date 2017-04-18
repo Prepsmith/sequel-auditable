@@ -2,13 +2,13 @@ module Sequel::Plugins
   module Auditable
     module InstanceMethods
       def before_create
-        super
         self.created_by_id = current_user_id if respond_to? :created_by_id=
+        super
       end
 
       def before_save
-        super
         self.updated_by_id = current_user_id if respond_to? :updated_by_id=
+        super
       end
 
       def after_save
