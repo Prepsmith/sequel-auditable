@@ -1,5 +1,6 @@
 require 'sequel/plugins/auditable/class_methods'
 require 'sequel/plugins/auditable/instance_methods'
+require 'sequel/plugins/auditable/dataset_action'
 
 module Sequel
   module Plugins
