@@ -1,9 +1,9 @@
 module Sequel::Plugins
   module Auditable
     module AddCreatedById
-      def insert(*values, &block)
+      def insert_sql(*values)
         if self.columns.include?(:created_by_id) && values.length == 1 && values.first.is_a?(Hash) && Thread.current[:current_user]
-          super(values.first.merge(created_by_id: Thread.current[:current_user].user_id), &block)
+          super(values.first.merge(created_by_id: Thread.current[:current_user].user_id))
         else
           super
         end
@@ -11,9 +11,9 @@ module Sequel::Plugins
     end
 
     module AddUpdatedById
-      def update(values=OPTS, &block)
+      def update_sql(values = OPTS)
         if self.columns.include?(:updated_by_id) && values.is_a?(Hash) && Thread.current[:current_user]
-          super(values.merge(updated_by_id: Thread.current[:current_user].user_id), &block)
+          super(values.merge(updated_by_id: Thread.current[:current_user].user_id))
         else
           super
         end
