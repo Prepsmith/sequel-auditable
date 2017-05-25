@@ -8,6 +8,14 @@ module Sequel::Plugins
           super
         end
       end
+
+      def multi_insert_sql(columns, values)
+        if self.columns.include?(:created_by_id) && Thread.current[:current_user]
+          super(columns << :created_by_id, values.map { |v| v << Thread.current[:current_user].user_id })
+        else
+          super
+        end
+      end
     end
 
     module AddUpdatedById
