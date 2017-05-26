@@ -9,7 +9,6 @@ module Sequel
         model.instance_eval do
           @additional_fields = opts[:additional_fields] || []
         end
-        model.set_restricted_columns :created_by_id
       end
     end
   end
