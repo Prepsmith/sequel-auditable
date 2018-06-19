@@ -1,4 +1,3 @@
-require "sequel/auditable/version"
 require "sequel/plugins/auditable"
 
 module Sequel
