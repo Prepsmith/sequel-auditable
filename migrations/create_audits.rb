@@ -9,7 +9,7 @@ Sequel.migration {
       DateTime :created_at
       DateTime :updated_at
       jsonb :fields
-      index [:resource_id, :resource_type]
+      index [:resource_type, :resource_id]
     end
   end
 }
